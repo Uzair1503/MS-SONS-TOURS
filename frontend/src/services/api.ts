@@ -2,7 +2,7 @@ import axios from "axios";
 import type { ApiResponse, Package, Hotel, Airline, RoomType, BookingInquiry, DashboardStats, CalculatorResult, AdminUser, AuditLogEntry, UmrahSettings, CustomPackageInput, CustomPackageResult, Review } from "@/types";
 
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.VITE_API_URL || "/api",
   withCredentials: true,
   headers: { "Content-Type": "application/json" },
 });
