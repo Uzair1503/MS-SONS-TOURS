@@ -1,0 +1,286 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+enum PackageStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+  SOLD_OUT
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  QUOTED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum HotelCategory {
+  BUDGET
+  ECONOMY
+  STANDARD
+  PREMIUM
+  LUXURY
+}
+
+model AdminUser {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String
+  name          String
+  role          Role      @default(STAFF)
+  active        Boolean   @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  auditLogs     AuditLog[]
+}
+
+model Airline {
+  id                String    @id @default(uuid())
+  name              String
+  code              String    @unique
+  logo              String?
+  description       String?
+  baggageAllowance  String?
+  departureCity     String    @default("Islamabad")
+  arrivalCity       String    @default("Jeddah")
+  active            Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  packages          Package[]
+  flightSchedules   FlightSchedule[]
+}
+
+model Hotel {
+  id                    String          @id @default(uuid())
+  name                  String
+  city                  String
+  location              String?
+  distanceFromHaram     String?
+  distanceFromMasjidNabawi String?
+  category              HotelCategory   @default(STANDARD)
+  rating                Float?
+  starRating            Int?
+  shuttleAvailable      Boolean         @default(false)
+  description           String?
+  amenities             String[]
+  images                String[]
+  active                Boolean         @default(true)
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  packageHotels         PackageHotel[]
+  roomPrices            HotelRoomPrice[]
+}
+
+// Hotel-level nightly rates (SAR per person, per night) used by the Custom
+// Package Builder. Stored on the hotel (not the package) so Makkah/Madinah
+// hotel rates are single-source-of-truth and admin-editable per hotel.
+model HotelRoomPrice {
+  id            String      @id @default(uuid())
+  hotelId       String
+  hotel         Hotel       @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  roomTypeId    String
+  roomType      RoomType    @relation(fields: [roomTypeId], references: [id])
+  price         Float
+  available     Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([hotelId, roomTypeId])
+  @@index([hotelId])
+  @@index([roomTypeId])
+}
+
+model RoomType {
+  id        String          @id @default(uuid())
+  name      String          @unique
+  code      String?         @unique
+  active    Boolean         @default(true)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  prices    PackageRoomPrice[]
+  hotelPrices HotelRoomPrice[]
+}
+
+model Package {
+  id                String              @id @default(uuid())
+  packageCode       String?             @unique
+  title             String
+  durationDays      Int
+  status            PackageStatus       @default(DRAFT)
+  description       String?
+  provider          String?
+  airlineId         String?
+  airline           Airline?            @relation(fields: [airlineId], references: [id])
+  departureCity     String              @default("Islamabad")
+  arrivalCity       String              @default("Jeddah")
+  departureDate     DateTime?
+  returnDate        DateTime?
+  departureDates    String?
+  returnDates       String?
+  baggageDetails    String?
+  infantRate        Float?
+  childRate         Float?
+  childWithoutBedRate Float?
+  visaIncluded      Boolean             @default(true)
+  ticketIncluded    Boolean             @default(true)
+  hotelIncluded     Boolean             @default(true)
+  transportIncluded Boolean             @default(true)
+  guideIncluded     Boolean             @default(false)
+  ziyaratIncluded   Boolean             @default(false)
+  termsAndConditions String?
+  sortOrder         Int                 @default(0)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  makkahHotel       PackageHotel?       @relation("MakkahHotel", fields: [makkahHotelId], references: [id])
+  makkahHotelId     String?
+  makkahNights      Int?
+  makkahDistance    String?
+
+  madinahHotel      PackageHotel?       @relation("MadinahHotel", fields: [madinahHotelId], references: [id])
+  madinahHotelId    String?
+  madinahNights     Int?
+  madinahDistance   String?
+
+  roomPrices        PackageRoomPrice[]
+  inquiries         BookingInquiry[]
+
+  @@index([durationDays])
+  @@index([status])
+  @@index([airlineId])
+  @@index([departureDate])
+  @@index([packageCode])
+}
+
+model PackageHotel {
+  id            String          @id @default(uuid())
+  hotelId       String
+  hotel         Hotel           @relation(fields: [hotelId], references: [id])
+  distance      String?
+  location      String?
+  nights        Int?
+  shuttleAvailable Boolean     @default(false)
+
+  makkahPackages Package[]      @relation("MakkahHotel")
+  madinahPackages Package[]     @relation("MadinahHotel")
+
+  @@unique([hotelId])
+}
+
+model PackageRoomPrice {
+  id            String      @id @default(uuid())
+  packageId     String
+  package       Package     @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  roomTypeId    String
+  roomType      RoomType    @relation(fields: [roomTypeId], references: [id])
+  price         Float
+  currency      String      @default("PKR")
+  available     Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([packageId, roomTypeId])
+  @@index([packageId])
+  @@index([roomTypeId])
+}
+
+model FlightSchedule {
+  id              String    @id @default(uuid())
+  airlineId       String
+  airline         Airline   @relation(fields: [airlineId], references: [id])
+  departureCity   String    @default("Islamabad")
+  arrivalCity     String    @default("Jeddah")
+  departureDate   DateTime
+  returnDate      DateTime?
+  flightNumber    String?
+  baggageDetails  String?
+  status          String    @default("active")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([airlineId])
+  @@index([departureDate])
+}
+
+model BookingInquiry {
+  id                String        @id @default(uuid())
+  referenceNumber   String        @unique
+  fullName          String
+  whatsappNumber    String
+  email             String?
+  adults            Int           @default(1)
+  children          Int           @default(0)
+  infants           Int           @default(0)
+  durationDays      Int?
+  packageId         String?
+  package           Package?      @relation(fields: [packageId], references: [id])
+  airlineId         String?
+  hotelPreference   String?
+  roomType          String?
+  departureDate     String?
+  specialRequirements String?
+  message           String?
+  status            InquiryStatus @default(NEW)
+  adminNotes        String?
+  estimatedPrice    Float?
+  currency          String        @default("PKR")
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([referenceNumber])
+}
+
+model SiteSetting {
+  id            String    @id @default(uuid())
+  key           String    @unique
+  value         String
+  category      String    @default("general")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  name       String
+  city       String?
+  rating     Int
+  comment    String
+  imageUrl   String?
+  isApproved Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  @@index([isApproved])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id          String    @id @default(uuid())
+  adminId     String?
+  admin       AdminUser? @relation(fields: [adminId], references: [id])
+  action      String
+  entity      String
+  entityId    String?
+  metadata    Json?
+  ipAddress   String?
+  createdAt   DateTime  @default(now())
+
+  @@index([entity])
+  @@index([createdAt])
+}

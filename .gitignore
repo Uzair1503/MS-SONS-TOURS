@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+dist/
+build/
+.next/
+
+# Environment
+.env
+!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Docker
+docker-compose.override.yml
+
+# Kafka / Zookeeper local data (in case of bind-mounted volumes)
+kafka-data/
+zookeeper-data/
+zookeeper-logs/
+kafka-logs/
+/data/kafka/
+/data/zookeeper/
+
+# Redis local data (in case of bind-mounted volumes)
+redis-data/
+dump.rdb
+
+# Prisma
+backend/prisma/migrations/
+
+# Vite config build artifacts
+frontend/vite.config.js
+frontend/vite.config.d.ts
+
+# Coverage
+coverage/
