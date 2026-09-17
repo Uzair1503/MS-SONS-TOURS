@@ -7,6 +7,14 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -95,7 +103,7 @@ export const reviewApi = {
 // Admin APIs
 export const adminApi = {
   login: (email: string, password: string) =>
-    api.post<ApiResponse<{ token: string; user: any }>>("/auth/login", { email, password }),
+    api.post<ApiResponse<{ token: string; user: any }> & { token: string; user: any }>("/auth/login", { email, password }),
   logout: () =>
     api.post("/auth/logout"),
   getProfile: () =>

@@ -13,7 +13,7 @@ interface JwtPayload {
 export function authenticate(req: AuthRequest, res: Response, next: NextFunction): void {
   const token =
     req.cookies?.token ||
-    req.headers.authorization?.replace("Bearer ", "");
+    req.headers.authorization?.split(" ")[1];
 
   if (!token) {
     res.status(401).json({ success: false, error: "Authentication required" });

@@ -110,6 +110,16 @@ This starts PostgreSQL, Redis, Kafka, Zookeeper, the API (port 5000), and the fr
 
 The backend **refuses to start** if `JWT_SECRET` is missing or still the placeholder while `NODE_ENV=production`, and `docker compose config` fails fast when `JWT_SECRET` is unset - so the insecure default can never silently reach production.
 
+## Production Deployment (Render)
+
+Render runs the frontend as a **static site** and the backend as a **web service**, on separate domains with no proxy in between. Admin authentication relies on an HttpOnly cookie. For that cookie to be sent, both services **must be on the same registrable domain (same-site)**.
+
+- The default `*.onrender.com` subdomains will **not** work: `onrender.com` is on the [Public Suffix List](https://publicsuffix.org), so two `.onrender.com` hosts are cross-site to browsers, and the `SameSite=None` auth cookie is withheld as a third-party cookie (admin login succeeds, but `/dashboard` and `/profile` then return 401 and redirect back to login).
+- Fix: attach custom domains under one registrable domain, e.g. `app.mssons.com` (frontend) and `api.mssons.com` (backend).
+- Backend env: `FRONTEND_URL` must equal the **exact** frontend origin (scheme + host, no trailing slash), e.g. `https://app.mssons.com`.
+- Frontend build env: `VITE_API_URL` must equal the backend origin including `/api`, e.g. `https://api.mssons.com/api` (see `frontend/.env.example`).
+- Cookie configuration (`SameSite=None; Secure` in production, `HttpOnly`) and CORS (`origin: FRONTEND_URL`, `credentials: true`) are already correct - no code change is required once the domains are same-site.
+
 ## Environment Variables
 
 - Compose-level variables (`JWT_SECRET`, `FRONTEND_URL`, `SITE_URL`, `FRONTEND_PORT`): see the root `.env.example`.

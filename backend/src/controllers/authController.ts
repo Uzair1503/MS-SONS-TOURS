@@ -19,7 +19,7 @@ export const authController = {
         ...cookieOptions,
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
-      res.json({ success: true, data: result });
+      res.json({ success: true, token: result.token, user: result.user });
     } catch (err) {
       next(err);
     }

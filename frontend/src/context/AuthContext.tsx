@@ -37,12 +37,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     const { data } = await adminApi.login(email, password);
-    if (data.success) setUser(data.data.user);
+    if (data.success) setUser(data.user);
+    localStorage.setItem("token", data.token);
   };
 
   const logout = async () => {
     await adminApi.logout();
     setUser(null);
+    localStorage.removeItem("token");
   };
 
   return (
