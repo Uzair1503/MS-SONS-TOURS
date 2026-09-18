@@ -1,6 +1,7 @@
 import { app } from "./app";
 import { config } from "./config";
 import { prisma } from "./config/prisma";
+import { startDailyCleanupScheduler } from "./services/packageCleanupService";
 
 process.on("unhandledRejection", (reason) => {
   console.error("Unhandled promise rejection:", reason);
@@ -14,6 +15,8 @@ async function main() {
   try {
     await prisma.$connect();
     console.log("Database connected successfully");
+
+    startDailyCleanupScheduler();
 
     app.listen(config.port, () => {
       console.log(`MS Sons Tours API running on port ${config.port}`);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SeoHead from "@/components/shared/Seo";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { usePackages } from "@/hooks/usePackages";
 import { useSettings } from "@/hooks/useSettings";
 import { inquiryApi } from "@/services/api";
+import type { Package } from "@/types";
 
 const schema = z.object({
   fullName: z.string().min(2, "Name is required"),
@@ -30,6 +31,14 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+function packageLabel(pkg: Package): string {
+  const base = `${pkg.title} - ${pkg.durationDays} days`;
+  const details: string[] = [];
+  if (pkg.makkahHotel?.hotel?.name) details.push(`Makkah: ${pkg.makkahHotel.hotel.name}`);
+  if (pkg.madinahHotel?.hotel?.name) details.push(`Madinah: ${pkg.madinahHotel.hotel.name}`);
+  return details.length > 0 ? `${base} | ${details.join(", ")}` : base;
+}
+
 export default function BookingPage() {
   const [searchParams] = useSearchParams();
   const preselectedPackage = searchParams.get("packageId") || "";
@@ -38,6 +47,8 @@ export default function BookingPage() {
   const { data: packagesData } = usePackages({ status: "ACTIVE", limit: "100" });
   const { data: settings } = useSettings();
   const whatsappNumber = settings?.whatsapp_number || "923713011519";
+
+  const packages = packagesData?.data || [];
 
   const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -48,6 +59,13 @@ export default function BookingPage() {
       packageId: preselectedPackage,
     },
   });
+
+  useEffect(() => {
+    if (!packagesData) return;
+    if (preselectedPackage && !packages.some((pkg) => pkg.id === preselectedPackage)) {
+      setValue("packageId", "");
+    }
+  }, [packagesData, preselectedPackage, packages, setValue]);
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -154,11 +172,11 @@ export default function BookingPage() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">Package</label>
                   <Select value={watch("packageId") || ""} onValueChange={(v) => setValue("packageId", v)}>
-                    <SelectTrigger><SelectValue placeholder="Select a package (optional)" /></SelectTrigger>
+                    <SelectTrigger className="h-auto min-h-[2.5rem] py-2.5"><SelectValue placeholder="Select a package (optional)" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="none">No specific package</SelectItem>
-                      {packagesData?.data?.map((pkg: any) => (
-                        <SelectItem key={pkg.id} value={pkg.id}>{pkg.title} - {pkg.durationDays} days</SelectItem>
+                      {packages.map((pkg) => (
+                        <SelectItem key={pkg.id} value={pkg.id}>{packageLabel(pkg)}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>

@@ -91,14 +91,14 @@ export default function PackageCard({ pkg, showDurationBadge = true, thumbnailSr
           )}
         </div>
 
-        <CardContent className="p-5 flex flex-col flex-1">
+        <CardContent className="p-5 max-[430px]:p-6 flex flex-col flex-1">
           <div className="mb-3">
-            <h3 className="font-display font-semibold text-lg text-gray-900 line-clamp-2 dark:text-gray-100">
+            <h3 className="font-display font-semibold text-lg max-[430px]:text-xl text-gray-900 line-clamp-2 dark:text-gray-100">
               {pkg.title}
             </h3>
           </div>
 
-          <div className="space-y-2 text-sm text-gray-600 mb-5 flex-1 dark:text-gray-400">
+          <div className="space-y-2 max-[430px]:space-y-3 text-sm text-gray-600 mb-5 flex-1 dark:text-gray-400">
             <div>
               <div className="flex items-start gap-2">
                 <Calendar className="w-4 h-4 text-gray-400 dark:text-gray-500 mt-0.5 flex-shrink-0" />
@@ -189,7 +189,7 @@ export default function PackageCard({ pkg, showDurationBadge = true, thumbnailSr
 
           {startingPrice && (
             <div className="mb-4">
-              <p className="text-xs text-gray-500 mb-1 dark:text-gray-400">Starting from</p>
+              <p className="text-xs max-[430px]:text-sm text-gray-500 mb-1 dark:text-gray-400">Starting from</p>
               <p className="text-2xl font-display font-bold text-gray-900 dark:text-gray-100">
                 {formatPrice(startingPrice)}
               </p>
@@ -197,10 +197,10 @@ export default function PackageCard({ pkg, showDurationBadge = true, thumbnailSr
           )}
 
           <div className="flex flex-col sm:flex-row gap-3 mt-auto">
-            <Button variant="default" size="sm" className="flex-1" asChild>
+            <Button variant="default" size="sm" className="flex-1 max-[430px]:h-12 max-[430px]:text-base max-[430px]:px-5" asChild>
               <Link to={`/package/${pkg.id}`}>View Details</Link>
             </Button>
-            <Button variant="outline" size="sm" className="flex-1 border-green-500 text-green-500 hover:bg-green-500 hover:border-green-500 hover:text-white dark:border-green-500 dark:text-green-500 dark:hover:bg-green-500 dark:hover:border-green-500 dark:hover:text-white" asChild>
+            <Button variant="outline" size="sm" className="flex-1 max-[430px]:h-12 max-[430px]:text-base max-[430px]:px-5 border-green-500 text-green-500 hover:bg-green-500 hover:border-green-500 hover:text-white dark:border-green-500 dark:text-green-500 dark:hover:bg-green-500 dark:hover:border-green-500 dark:hover:text-white" asChild>
               <a
                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsAppMsg)}`}
                 target="_blank"
@@ -208,7 +208,7 @@ export default function PackageCard({ pkg, showDurationBadge = true, thumbnailSr
                 aria-label="Ask about this package on WhatsApp"
                 title="Ask about this package on WhatsApp"
               >
-                <MessageCircle className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4 max-[430px]:w-5 max-[430px]:h-5" />
                 Ask
               </a>
             </Button>
