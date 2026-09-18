@@ -101,10 +101,10 @@ export default function HomePage() {
           <picture>
             {theme === "dark" ? (
               <>
-                <source media="(min-width: 1280px)" srcSet="/images/hero/kaaba-1920w.webp" type="image/webp" />
-                <source srcSet="/images/hero/kaaba-960w.webp" type="image/webp" />
+                <source media="(min-width: 1280px)" srcSet="/images/hero/kaaba-new-1920w.webp" type="image/webp" />
+                <source srcSet="/images/hero/kaaba-new-960w.webp" type="image/webp" />
                 <img
-                  src="/images/hero/kaaba.jpg"
+                  src="/images/hero/kaaba-new.jpg"
                   alt="The Kaaba in Makkah at night"
                   className="w-full h-full object-cover object-[50%_60%]"
                   fetchPriority="high"
@@ -112,10 +112,10 @@ export default function HomePage() {
               </>
             ) : (
               <>
-                <source media="(min-width: 1280px)" srcSet="/images/hero/masjid-nabawi-1920w.webp" type="image/webp" />
-                <source srcSet="/images/hero/masjid-nabawi-960w.webp" type="image/webp" />
+                <source media="(min-width: 1280px)" srcSet="/images/hero/masjid-nabawi-new-1920w.webp" type="image/webp" />
+                <source srcSet="/images/hero/masjid-nabawi-new-960w.webp" type="image/webp" />
                 <img
-                  src="/images/hero/masjid-nabawi.jpg"
+                  src="/images/hero/masjid-nabawi-new.jpg"
                   alt="Masjid an-Nabawi in Madinah at dusk"
                   className="w-full h-full object-cover"
                   fetchPriority="high"
