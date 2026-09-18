@@ -12,6 +12,7 @@
     "db:seed": "npx tsx prisma/seed.ts",
     "db:seed:clean": "npx tsx prisma/seed-clean.ts",
     "db:seed:umrah": "npx tsx prisma/seed-umrah-rates.ts",
+    "db:seed:packages-sep2026": "tsx prisma/seed-packages-sep2026.ts",
     "db:generate": "npx prisma generate",
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit"

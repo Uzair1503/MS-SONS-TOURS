@@ -1,0 +1,15 @@
+flyer,pkg_name,duration_days,makkah_hotel,makkah_nights,madinah_hotel,madinah_nights,madinah_location_note,sharing_pkr,quad_pkr,triple_pkr,double_pkr
+21Days_SpiritualJourney,BUDGET,21,Mayer Mayassar (Shuttle Service),15,Fundaq Dakhil (ex-Al Aliya) 700M,5,Bab e Salam Gate - Kubri Side,237000,243000,253000,273000
+21Days_SpiritualJourney,PACKAGE 01,21,Jaddat Al Khalil 1200M - Ibrahim Khalil Rd,14,Fundaq Dakhil (ex-Al Aliya) 700M,6,Bab e Salam Gate - Kubri Side,244000,256000,269000,292000
+21Days_SpiritualJourney,PACKAGE 02,21,Multaqa Al Ibadat / Tara Al Johra / Miad Al Majid 700M,12,Fundaq Dakhil (ex-Al Aliya) 700M,8,Bab e Salam Gate - Kubri Side,249000,262000,275000,303000
+21Days_SpiritualJourney,PACKAGE 03,21,Saif Al Majid / Mukarem Al Hijra 600M - Hijra Rd,12,Fundaq Dakhil (ex-Al Aliya) 700M,9,Bab e Salam Gate - Kubri Side,255000,270000,287000,321000
+
+# Flight dates (separate reference, not per-package):
+# AIRSIAL Islamabad-Jeddah: Dep 02 Oct / Return 22 Oct
+# SAUDIA Peshawar-Jeddah: Dep 27 Sep / Return 18 Oct  |  Dep 05 Oct / Return 25 Oct
+# PIA GROUPS Peshawar & Islamabad: Dep PEW 07 Oct / Return 28 Oct  |  Dep PEW 14 Oct / Return 04 Nov  |  Dep ISB 08 Oct / Return 29 Oct
+# PIA REVISED Peshawar-Jeddah: Dep 23 Sep / Return 14 Oct  |  Dep 30 Sep / Return 21 Oct
+
+# Infant & child rates (flat, not per room type):
+# Infant (0-2 yrs): 95000 PKR
+# Child (without bed): 200000 PKR

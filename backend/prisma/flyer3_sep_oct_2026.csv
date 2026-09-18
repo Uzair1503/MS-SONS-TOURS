@@ -1,0 +1,21 @@
+flyer,category_no,makkah_hotel,makkah_distance_area,madinah_hotel,madinah_distance_area,duration_days,sharing_quin_pkr,quad_pkr,triple_pkr,double_pkr
+SepOct2026,1,Mayar Moyassar or Similar (2500 MTR) Kudai,,Forsan Al Ghad or Similar (100 MTR Shuttle),Awali Side,14,237252,240140,244953,254580
+SepOct2026,1,Mayar Moyassar or Similar (2500 MTR) Kudai,,Forsan Al Ghad or Similar (100 MTR Shuttle),Awali Side,22,242116,246220,253060,266740
+SepOct2026,2,Hibba Al Hijra 6 or Similar (2000 MTR) Ibrahim Khalil,,Forsan Al Ghad or Similar (100 MTR Shuttle),Awali Side,14,237936,240995,246093,256290
+SepOct2026,2,Hibba Al Hijra 6 or Similar (2000 MTR) Ibrahim Khalil,,Forsan Al Ghad or Similar (100 MTR Shuttle),Awali Side,22,243256,247645,254960,269590
+SepOct2026,3,Jada Al Khalil or Similar (1200 MTR) Ibrahim Khalil,,Forsan Al Ghad or Similar (100 MTR Shuttle),Awali Side,14,242724,246980,254073,268260
+SepOct2026,3,Jada Al Khalil or Similar (1200 MTR) Ibrahim Khalil,,Forsan Al Ghad or Similar (100 MTR Shuttle),Awali Side,22,251236,257620,268260,289540
+SepOct2026,4,Jada Al Khalil or Similar (1200 MTR) Ibrahim Khalil,,Zahra Sita or Similar (700 MTR),Qurban Side,14,245384,250305,258507,274910
+SepOct2026,4,Jada Al Khalil or Similar (1200 MTR) Ibrahim Khalil,,Zahra Sita or Similar (700 MTR),Qurban Side,22,254428,261610,273580,297520
+SepOct2026,5,Makarim Al Hijra or Similar (700 MTR) Hijra Road,,Zahra Sita or Similar (700 MTR),Qurban Side,14,258760,263985,276747,302270
+SepOct2026,5,Makarim Al Hijra or Similar (700 MTR) Hijra Road,,Zahra Sita or Similar (700 MTR),Qurban Side,22,276721,284410,303980,343120
+SepOct2026,6,Makarim Al Hijra or Similar (700 MTR) Hijra Road,,Majd Al Fiddi (450 MTR),Albaik Side,14,260660,266360,279913,307020
+SepOct2026,6,Makarim Al Hijra or Similar (700 MTR) Hijra Road,,Majd Al Fiddi (450 MTR),Albaik Side,22,279001,287260,307780,348820
+SepOct2026,7,Tara Al Yasmeen or Similar (550 MTR) Ibrahim Khalil,,Majd Al Fiddi (450 MTR),Albaik Side,14,263700,269780,284473,313860
+SepOct2026,7,Tara Al Yasmeen or Similar (550 MTR) Ibrahim Khalil,,Majd Al Fiddi (450 MTR),Albaik Side,22,284068,292960,315380,360220
+
+# Nights: 14 days = Makkah 9 nights / Madinah 5 nights; 21 days = Makkah 14 / Madinah 6 (dates only, no separate price row); 22 days = Makkah 15 / Madinah 6
+# Flight dates:
+# 14 DAYS - Islamabad Sep(PHM16): 09,12,15,22,24,27,30 | Islamabad Oct(PHM18): 02,04,13 | Peshawar Oct(PHM19): 04,11
+# 21 DAYS - Islamabad Sep(PHM16): 16,20,23,25,26,29 | Islamabad Oct(PHM18): 01,02,03,05,06,08,10
+# 22 DAYS - Peshawar Oct(PHM19): 02,05,09,12
