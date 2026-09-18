@@ -25,6 +25,14 @@ import * as path from "path";
 // the customer-facing site does not show duplicates. Only hotels that have no
 // existing match are created fresh. Reused hotels are never modified.
 //
+// Flyer 1 (Saudia 15/21-day) additionally: names packages "15 Days Package NN"
+// / "21 Days Package NN", links each package to the existing Saudia airline
+// (created only if missing), stores the four official flyer terms in
+// Package.termsAndConditions, writes the flight-group departure/return dates
+// as ISO date strings on the package, and creates the 6 FlightSchedule rows
+// (2 x 15d, 4 x 21d) for that airline. The "5 + 3" / "6 + 6" Makkah night
+// splits from the flyer rows are preserved verbatim in the package description.
+//
 // NOTE (schema decision - flyer 2): the flat Infant (0-2 yrs) = 95,000 PKR and
 // Child (without bed) = 200,000 PKR rates cannot be expressed as per-room-type
 // PackageRoomPrice rows. They ARE representable on the Package level via the
@@ -135,6 +143,35 @@ const HOTEL_ALIASES: Record<string, string[]> = {
 
 type HotelRef = { id: string; name: string };
 
+const SAUDIA_BAGGAGE = "30kg checked + 7kg hand luggage";
+
+const SAUDIA_TERMS = [
+  "Booking finalized after 100% advance payment",
+  "Non-refundable & non-changeable after finalization",
+  "Packages subject to change without prior notice",
+  "Pakistan / Saudi rule changes may affect packages",
+].join("\n");
+
+// Flight groups transcribed verbatim from the written September 2026 Saudia flyer.
+const FLIGHT_GROUPS: Record<number, Array<{ dep: string; ret: string }>> = {
+  15: [
+    { dep: "2026-09-17", ret: "2026-10-01" },
+    { dep: "2026-09-27", ret: "2026-10-11" },
+  ],
+  21: [
+    { dep: "2026-09-18", ret: "2026-10-08" },
+    { dep: "2026-09-23", ret: "2026-10-13" },
+    { dep: "2026-09-26", ret: "2026-10-16" },
+    { dep: "2026-09-28", ret: "2026-10-18" },
+  ],
+};
+
+// Nights exactly as written on the flyer rows (the Makkah split stays as-is).
+const NIGHTS_LABELS: Record<number, { makkah: string; madinah: string }> = {
+  15: { makkah: "5 + 3", madinah: "6" },
+  21: { makkah: "6 + 6", madinah: "8" },
+};
+
 async function main() {
   console.log("Seeding Sep/Oct 2026 flyer packages...");
 
@@ -155,6 +192,34 @@ async function main() {
       create: rt,
     });
     rtByName[rt.name] = created.id;
+  }
+
+  // ---------- Saudia airline (reuse the existing record; create only if missing) ----------
+  const saudiAirline = await prisma.airline.findFirst({
+    where: {
+      OR: [
+        { name: { equals: "Saudia", mode: "insensitive" } },
+        { code: { equals: "SV", mode: "insensitive" } },
+      ],
+    },
+  });
+  let saudiaId: string;
+  if (saudiAirline) {
+    saudiaId = saudiAirline.id;
+    console.log(`  airline: reused existing Saudia (${saudiAirline.name})`);
+  } else {
+    const created = await prisma.airline.create({
+      data: {
+        name: "Saudia",
+        code: "SV",
+        description: "Saudi Arabian Airlines - The national carrier of Saudi Arabia",
+        baggageAllowance: SAUDIA_BAGGAGE,
+        departureCity: "Islamabad",
+        arrivalCity: "Jeddah",
+      },
+    });
+    saudiaId = created.id;
+    console.log("  airline: created Saudia (SV)");
   }
 
   const hotelCache = new Map<string, HotelRef>();
@@ -267,17 +332,26 @@ async function main() {
     const madinahPhId = await getOrCreatePackageHotel(madinah.id, dNote);
 
     const packageCode = `SAUDIA15-P${row.pkg_no}-${dur}D`;
-    const title = `${makkah.name} + ${madinah.name} - ${dur} Days`;
+    const pkgNo = row.pkg_no.trim().padStart(2, "0");
+    const title = `${dur} Days Package ${pkgNo}`;
+    const groups = FLIGHT_GROUPS[dur] ?? [];
+    const depDates = groups.map((g) => g.dep).join(", ");
+    const retDates = groups.map((g) => g.ret).join(", ");
+    const nights = NIGHTS_LABELS[dur] ?? NIGHTS_LABELS[15];
     const data = {
       title,
       durationDays: dur,
       status: PackageStatus.ACTIVE,
-      description: `${makkah.name} in Makkah (${mNote}). ${madinah.name} in Madinah (${dNote}). ${dur}-day Umrah package from Islamabad to Jeddah.`,
+      description: `${makkah.name} in Makkah (${mNote}). ${madinah.name} in Madinah (${dNote}). ${dur}-day Umrah package from Islamabad to Jeddah with Saudia direct flights. Makkah ${nights.makkah} nights, Madinah ${nights.madinah} nights.`,
       departureCity: "Islamabad",
       arrivalCity: "Jeddah",
-      departureDates: row.flight_groups,
-      returnDates: null,
-      baggageDetails: "30kg checked + 7kg hand",
+      airlineId: saudiaId,
+      departureDate: groups.length ? new Date(`${groups[0].dep}T00:00:00.000Z`) : null,
+      returnDate: groups.length ? new Date(`${groups[0].ret}T00:00:00.000Z`) : null,
+      departureDates: depDates || row.flight_groups,
+      returnDates: retDates || null,
+      baggageDetails: SAUDIA_BAGGAGE,
+      termsAndConditions: SAUDIA_TERMS,
       visaIncluded: true,
       ticketIncluded: true,
       hotelIncluded: true,
@@ -303,6 +377,37 @@ async function main() {
     packagesUpserted += 1;
     console.log(`  flyer1: ${packageCode} (${title})`);
   }
+
+  // ----- FlightSchedule records for the Saudia September 2026 groups -----
+  // 2 groups for 15-day, 4 groups for 21-day, all linked to the reused SAUDIA
+  // airline. FlightSchedule has no natural unique key, so look up by
+  // (airlineId + departureDate + returnDate) to stay idempotent.
+  let schedulesEnsured = 0;
+  for (const groups of Object.values(FLIGHT_GROUPS)) {
+    for (const g of groups) {
+      const dep = new Date(`${g.dep}T00:00:00.000Z`);
+      const ret = new Date(`${g.ret}T00:00:00.000Z`);
+      const existing = await prisma.flightSchedule.findFirst({
+        where: { airlineId: saudiaId, departureDate: dep, returnDate: ret },
+      });
+      if (existing) continue;
+      await prisma.flightSchedule.create({
+        data: {
+          airlineId: saudiaId,
+          departureCity: "Islamabad",
+          arrivalCity: "Jeddah",
+          departureDate: dep,
+          returnDate: ret,
+          baggageDetails: SAUDIA_BAGGAGE,
+          status: "active",
+        },
+      });
+      schedulesEnsured += 1;
+    }
+  }
+  console.log(
+    `  flight schedules: Saudia ${FLIGHT_GROUPS[15].length} groups (15d) + ${FLIGHT_GROUPS[21].length} groups (21d), created ${schedulesEnsured} new`
+  );
 
   // ===========================================================================
   // Flyer 2 - 21 Days "Spiritual Journey" (4 packages)
