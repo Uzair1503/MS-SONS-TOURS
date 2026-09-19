@@ -13,6 +13,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+if (!SMTP_USER || !SMTP_APP_PASSWORD) {
+  console.warn("SMTP_USER/SMTP_APP_PASSWORD not set — booking notification emails will not be sent");
+}
+
 type BookingInquiry = Record<string, unknown>;
 
 function row(label: string, value: unknown): string {

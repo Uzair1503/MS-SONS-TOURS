@@ -27,7 +27,7 @@ export const inquiryService = {
     try {
       await sendBookingNotification(inquiry);
     } catch (err) {
-      console.error("Failed to send booking notification email", err);
+      console.error("Booking notification email failed:", err);
     }
     return inquiry;
   },

@@ -1,0 +1,209 @@
+﻿{
+    "hotels":  [
+                   {
+                       "name":  "Argwan Madina",
+                       "images":  [
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjm1gePVFbARMilTOI5TZJrwSn-BNrwxtLbQIIfg2lIyjBXUAzFmPAidl5\u0026s=10",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy-IxLB6TYhVyOh0vVRY7uVoSYlDFxnaCM5ogpxVa0JA\u0026s=10"
+                                  ]
+                   },
+                   {
+                       "name":  "Fajar Alabadih 5",
+                       "images":  [
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbtkSSflQOynLG0Cg24p_Nh-GHGdRVjsDsAyGHj9iqWgrt12iuPbU5RBk\u0026s=10",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN4RIbndqLdvkSIs6Cil580W8jQrbzBagjx4Qm-97FKg\u0026s=10",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_WkjOrVMwCP1TB4kQjQ4N4vHOlfIrbNvd3LB8zO8RQ\u0026s=10"
+                                  ]
+                   },
+                   {
+                       "name":  "Maidan Al Bait 1",
+                       "images":  [
+                                      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/817868454.jpg?k=0cd8e040144b26d55cdcd8a3943e0da2b201e23f4ecda04fd15d344a8054bd81\u0026o=",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYovPCPrkHh7qQg36_i1yPVf0I3EPZqsD-DB3yOeqj-K1XrbvF7p8YTL2z\u0026s=10"
+                                  ]
+                   },
+                   {
+                       "name":  "Maidan Al Bait 2",
+                       "images":  [
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEe8OFuCr44oZlxZSO6ren0ktGLyueg-qQTGgpeJBsHg\u0026s=10",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBpAXblzFOdYVOrphtCcX-BysnWSg5-U6hP813w5mUx2qAH0_laWjBO3ls\u0026s=10",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMjyIyNTY_SU5ZekuX-iJcQGEnk-j6kt7bcz9ODH42Okm3AUZ71pThXGU\u0026s=10"
+                                  ]
+                   },
+                   {
+                       "name":  "Maidan Bait Madina",
+                       "images":  [
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqyCdik1q6WCMpjMyZ4Cuz2_84qGpcbb-eMMBWXS3C8g\u0026s=10",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0OcNavSK_hmazU0ryEeqJi6FRJSQPFhP6YW95tfUxqg\u0026s=10"
+                                  ]
+                   },
+                   {
+                       "name":  "Majd Al Fiddi",
+                       "images":  [
+                                      "/uploads/hotels/1788975697336-744294-hotel4.jpeg",
+                                      "/uploads/hotels/1788975697434-obfso8-hotel3.jpeg",
+                                      "/uploads/hotels/1788975697615-des9be-hotel.jpeg",
+                                      "/uploads/hotels/1788975697691-5bu4xo-hotel5.jpeg",
+                                      "/uploads/hotels/1788975716395-01r626-hotel2.jpeg"
+                                  ]
+                   },
+                   {
+                       "name":  "Marjan International",
+                       "images":  [
+                                      "https://www.tiviho.com/media/hotel_image/02_eYi7snj.jpg",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJP-7EVpoDtpDGd2xW246Nfx0Dbouqz3w5w9qxAa_fzzl8hpiZQg2M9ZCW\u0026s=10",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfHjCiUSlryKa22b25TMqlpftizpuGli7O7KlcXSkZ9RPUzz_DeVREcrk\u0026s=10"
+                                  ]
+                   },
+                   {
+                       "name":  "Qamar Taiba",
+                       "images":  [
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCDCG6Y0iFVEEi3DGoI9-VjoutCV-KQKKTSOOWT8EuWxnqQGKH2aisSis\u0026s=10",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMNOoSFhKFTbd8usPiXFBwqYgORXDTEHBrsCDo7rC4WHXLWWCoDDHur5nu\u0026s=10"
+                                  ]
+                   },
+                   {
+                       "name":  "Rahatalubur Old Rose",
+                       "images":  [
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBNsHrH_7nxp78xxMRwXAIyOuBr1Iv8IHrSR163878NzuuzdPLDyNMotW8\u0026s=10",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmZ_ZJwI8E-i1Cbg8dyQBAXAyvKSeZDEqGunWk7-0YsnZuJSLaV2xjjGiJ\u0026s=10"
+                                  ]
+                   },
+                   {
+                       "name":  "Yasmin Al Majd",
+                       "images":  [
+                                      "https://almajd-group.com/wp-content/uploads/2023/01/Yasmin-Al-Majd-Hotel-feat.jpg",
+                                      "https://almajd-group.com/wp-content/uploads/2025/06/Yasmin-Al-Majd-Hotel-Rooms-4.webp",
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlYm9x5Ljdgm_r2jfFS_erdBwXsw8FWBwDvhLMlk6PIUHU-rbC_uEtLYY\u0026s=10"
+                                  ]
+                   }
+               ],
+    "packages":  [
+                     {
+                         "packageCode":  "UMR17-01-14",
+                         "roomPrices":  {
+                                            "Quad":  227000,
+                                            "SHR/QUIN":  225480,
+                                            "Triple":  231560,
+                                            "Double":  240600
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-01-21",
+                         "roomPrices":  {
+                                            "Quad":  231560,
+                                            "SHR/QUIN":  229500,
+                                            "Triple":  238640,
+                                            "Double":  249800
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-02-14",
+                         "roomPrices":  {
+                                            "Quad":  228700,
+                                            "SHR/QUIN":  227000,
+                                            "Triple":  233840,
+                                            "Double":  244100
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-02-21",
+                         "roomPrices":  {
+                                            "Quad":  234220,
+                                            "SHR/QUIN":  231900,
+                                            "Triple":  241200,
+                                            "Double":  255120
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-03-14",
+                         "roomPrices":  {
+                                            "Quad":  232130,
+                                            "SHR/QUIN":  230040,
+                                            "Triple":  238400,
+                                            "Double":  250940
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-03-21",
+                         "roomPrices":  {
+                                            "Quad":  239500,
+                                            "SHR/QUIN":  236700,
+                                            "Triple":  248300,
+                                            "Double":  265760
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-04-14",
+                         "roomPrices":  {
+                                            "Quad":  235930,
+                                            "SHR/QUIN":  233450,
+                                            "Triple":  243500,
+                                            "Double":  258540
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-04-21",
+                         "roomPrices":  {
+                                            "Quad":  244100,
+                                            "SHR/QUIN":  240680,
+                                            "Triple":  254360,
+                                            "Double":  274880
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-05-14",
+                         "roomPrices":  {
+                                            "Quad":  249610,
+                                            "SHR/QUIN":  245600,
+                                            "Triple":  261700,
+                                            "Double":  285900
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-05-21",
+                         "roomPrices":  {
+                                            "Quad":  265380,
+                                            "SHR/QUIN":  259600,
+                                            "Triple":  282750,
+                                            "Double":  317440
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-06-14",
+                         "roomPrices":  {
+                                            "Quad":  250500,
+                                            "SHR/QUIN":  246500,
+                                            "Triple":  262900,
+                                            "Double":  287800
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-06-21",
+                         "roomPrices":  {
+                                            "Quad":  266520,
+                                            "SHR/QUIN":  260600,
+                                            "Triple":  284250,
+                                            "Double":  319720
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-07-14",
+                         "roomPrices":  {
+                                            "Quint":  250900,
+                                            "Quad":  255690,
+                                            "Triple":  269800,
+                                            "Double":  298060
+                                        }
+                     },
+                     {
+                         "packageCode":  "UMR17-07-21",
+                         "roomPrices":  {
+                                            "Quint":  267700,
+                                            "Quad":  274500,
+                                            "Triple":  294900,
+                                            "Double":  335680
+                                        }
+                     }
+                 ]
+}
